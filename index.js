@@ -1,16 +1,20 @@
 var allDrumButton = document.querySelectorAll(".drum").length; // cahcing the amount of button with .drum class in array
+
 for (let i = 0; i < allDrumButton; i++) {
   document.querySelectorAll(".drum")[i].addEventListener("click", function() { //adding click eventlistener for all button in .drum class
-    var element = this.innerHTML; // caching the element that got clicked
-    playAudio(element);
+    var buttonPressed = this.innerHTML; // caching the element that got clicked
+    playAudio(buttonPressed);
+    animateButton(buttonPressed);
   });
 }
+
 document.addEventListener("keydown", function(event) { //add keydown event listener for whole document
   var keyPressed = event.key; // caching the pressed key (string)
   playAudio(keyPressed);
+  animateButton(keyPressed);
 })
 
-function playAudio (key) {
+function playAudio(key) {
   switch (key) { //playing audio by that key
     case "w":
       var audio = new Audio("sounds/tom-1.mp3");
@@ -42,5 +46,13 @@ function playAudio (key) {
       break;
     default:
       console.log(key); // for any other than above
+  }
 }
+
+function animateButton (buttonPressed){
+  var activeButton = document.querySelector("."+buttonPressed);
+  activeButton.classList.add("pressed");
+  setTimeout(function(){
+    activeButton.classList.remove("pressed")
+  }, 100);
 }
